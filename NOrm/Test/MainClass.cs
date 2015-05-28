@@ -21,7 +21,7 @@ namespace NOrm.Test
                                     Nome = "Douglas",
                                     Senha = "MinhaSenha",
                                     Data = DateTime.Now,
-                                    recordState = Enums.RecordState.insert };
+                                    recordState = Enums.RecordState.Insert };
 
             // Demonstração queries CRUD
             Console.WriteLine(QueryParserService.GetSelectAllQuery<ExClass>());
@@ -40,7 +40,7 @@ namespace NOrm.Test
             dt.Rows.Add(new object[] { ex1.Identificador, ex1.Nome, ex1.Senha, ex1.Data });
 
             var ex2 = new ExClass();
-            ex2.recordState = Enums.RecordState.update;
+            ex2.recordState = Enums.RecordState.Update;
 
             EntityMapperService.BindByColumnName(dt.Rows[0], ref ex2);
 

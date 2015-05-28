@@ -12,7 +12,7 @@ namespace NOrm.Model
 
         public BaseEntity()
         {
-            recordState = RecordState.browse;
+            recordState = RecordState.Browse;
         }
     }
 }

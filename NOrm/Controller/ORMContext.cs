@@ -59,15 +59,15 @@ namespace NOrm.Controller
             // Obtém query de acordo com o record state registrado na entidade
             switch (entity.recordState)
             {
-                case RecordState.insert:
+                case RecordState.Insert:
                     query = QueryParserService.GetInsertQuery(entity);
                     break;
                 
-                case RecordState.update:
+                case RecordState.Update:
                     query = QueryParserService.GetUpdateByIdQuery(entity);
                     break;
 
-                case RecordState.delete:
+                case RecordState.Delete:
                     query = QueryParserService.GetDeleteByIdQuery(entity);
                     break;
 

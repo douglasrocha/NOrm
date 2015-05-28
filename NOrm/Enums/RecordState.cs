@@ -7,9 +7,9 @@ namespace NOrm.Enums
 {
     public enum RecordState 
     { 
-        browse, 
-        insert, 
-        update, 
-        delete 
+        Browse, 
+        Insert, 
+        Update, 
+        Delete 
     };
 }
