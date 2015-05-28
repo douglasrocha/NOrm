@@ -34,6 +34,25 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FirebirdSql.Data.FirebirdClient">
+      <HintPath>D:\FirebirdSql.Data.FirebirdClient.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.8.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity, Version=6.8.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\MySql.Data.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.8.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\DatabaseService.cs" />
     <Compile Include="Action\EntityMapperService.cs" />
     <Compile Include="Action\EntityService.cs" />
     <Compile Include="Action\QueryParserService.cs" />
@@ -54,6 +74,7 @@
     <Compile Include="Attributes\ORMPrimaryKey.cs" />
     <Compile Include="Controller\ORMContext.cs" />
     <Compile Include="Enums\RecordState.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\IllegalOperationException.cs" />
     <Compile Include="Exceptions\InvalidEntityException.cs" />
     <Compile Include="Model\BaseEntity.cs" />

@@ -1,4 +1,5 @@
-﻿using NOrm.Action;
+﻿using MySql.Data.MySqlClient;
+using NOrm.Action;
 using NOrm.Controller;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,9 @@ namespace NOrm.Test
     {
         public static void Main()
         {
+            MySqlConnection connection = new MySqlConnection();
+            var context = new ORMContext(connection);
+
             var ex1 = new ExClass { Identificador = 1,
                                     Nome = "Douglas",
                                     Senha = "MinhaSenha",
@@ -41,11 +45,11 @@ namespace NOrm.Test
             EntityMapperService.BindByColumnName(dt.Rows[0], ref ex2);
 
             // Demonstração ORMContext
-            ORMContext.Save(ex1);
-            ORMContext.Save(ex2);
+            context.Save(ex1);
+            context.Save(ex2);
 
-            var getAll = ORMContext.GetAll<ExClass>();
-            var getById = ORMContext.GetById(ref ex2);
+            var getAll = context.GetAll<ExClass>();
+            var getById = context.GetById(ref ex2);
         }
     }
 }

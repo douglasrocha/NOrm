@@ -5,20 +5,26 @@ using NOrm.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
-
 namespace NOrm.Controller
 {
-    public static class ORMContext
+    public class ORMContext
     {
-        public static bool GetById<T>(ref T entity) where T : BaseEntity
+        private DbConnection conn;
+
+        public ORMContext(DbConnection connection)
+        {
+            this.conn = connection;
+        }
+
+        public bool GetById<T>(ref T entity) where T : BaseEntity
         {
             var entityType = entity.GetType();
+            
             var query = QueryParserService.GetSelectByIdQuery(entity);
-
-            // TODO: Executar query no banco
-            var dataTableEntity = new DataTable(); // db.retrieveSql(query)
+            var dataTableEntity = DatabaseService.ExecuteQuery(conn, query);
 
             if (dataTableEntity.Rows.Count > 0)
             {
@@ -29,13 +35,12 @@ namespace NOrm.Controller
             return false;
         }
 
-        public static List<T> GetAll<T>() where T : BaseEntity
+        public List<T> GetAll<T>() where T : BaseEntity
         {
             List<T> entitiesOutput = new List<T>();
-            var query = QueryParserService.GetSelectAllQuery<T>();
 
-            // TODO: Executa query no banco e retorna datatable
-            var dataTableEntity = new DataTable(); // db.retrieveSql(query)
+            var query = QueryParserService.GetSelectAllQuery<T>();
+            var dataTableEntity = DatabaseService.ExecuteQuery(conn, query);
 
             foreach (DataRow row in dataTableEntity.Rows)
             {
@@ -47,10 +52,11 @@ namespace NOrm.Controller
             return entitiesOutput;
         }
 
-        public static void Save(BaseEntity entity)
+        public bool Save(BaseEntity entity)
         {
             string query = string.Empty;
 
+            // Obtém query de acordo com o record state registrado na entidade
             switch (entity.recordState)
             {
                 case RecordState.insert:
@@ -64,9 +70,23 @@ namespace NOrm.Controller
                 case RecordState.delete:
                     query = QueryParserService.GetDeleteByIdQuery(entity);
                     break;
+
+                default:
+                    return false;
+            }
+            
+            // Inicializa transação para controle de query em apenas uma linha
+            var transaction = conn.BeginTransaction();
+            var lines = DatabaseService.ExecuteNonQuery(conn, query, transaction);
+
+            if (lines == 1)
+            {
+                transaction.Commit();
+                return true;
             }
 
-
+            transaction.Rollback();
+            return false;
         }
     }
 }
